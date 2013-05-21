@@ -1,14 +1,9 @@
-
 function Well() {
-
-
 
     var WellData   = [];
 
     var WellX      = 10;
     var WellY      = 20;
-
-
 
     var Refresh  = function() {
 
@@ -23,28 +18,50 @@ function Well() {
       var board = document.getElementById('well');
       board.innerHTML = '';
 
-      var makeCell = function (tr, iHasWalls, whichRow, whichColumn ) {
+      var isLeftWall = function(xi, yi ) {
+          //console.log(")
+          return xi == 0;
+      }
+
+      var isRightWall = function(xi, yi ) {
+        return xi == x-1;
+      }
+
+      var isBottomWall = function(xi, yi ) {
+        return yi == y-1;
+      }
+
+      var makeCell = function (tr, whichRow, whichColumn, iHasWalls, iIsTopWall) {
         var td = document.createElement('td');
-        td.innerHTML = 'testicles';
-        if(  )
+        td.innerHTML = '';
+        td.id = id_for(whichColumn, whichRow);
+
+        if( iHasWalls ) {
+            td.className = "wall";
+        } else if( iIsTopWall ) {
+            td.className = "topwall";
+        }
         tr.appendChild(td);
       }
+
       var makeRow = function(whichRow, iHasWalls, isFloor) {
         var tr = document.createElement('tr');
-        
+
         var xi;
         for( xi = 0; xi < x; ++xi ) {
-            makeCell( tr, iHasWalls, whichRow, xi );
+            makeCell( tr, whichRow, xi,
+                ( isLeftWall(xi,whichRow) || isRightWall(xi,whichRow) || isBottomWall(xi,whichRow)),
+                ( whichRow == 0 ) ? true : false);
         }
         board.appendChild(tr);
       }
 
       var yi;
-      for (yi=0; yi<y; ++yi ) {
+      for (yi = 0; yi < y-1; ++yi ) {
         makeRow(yi, hasWalls, false);
       }
 
-      makeRow(yi+1, hasWalls, true);
+      makeRow(yi, hasWalls, true);
 
     }
 
@@ -59,7 +76,7 @@ function Well() {
       },
 
       refresh: function() { Refresh(); },
-      generateBoard: function() { GenerateBoard(WellX); }
+      generateBoard: function() { GenerateBoard(WellX, WellY, true); }
 
     };
 }
@@ -88,10 +105,6 @@ function RAF() {
        window.requestAnimationFrame(function() { RAF(); });
     }
 }
-
-
-
-
 
 var well = new Well();
 
