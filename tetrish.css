@@ -1,0 +1,7 @@
+
+html, body       { margin: 0; padding: 0; border: 0; }
+
+#well            { margin: 4em auto 0 auto; padding: 0; border: 0; border-collapse: collapse; }
+#well td         { width: 2em; height: 2em; border: 0.1em solid #888; background-color: #f4f4f4; }
+#well td.wall    { border-color: #777777; background-color: #777777; }
+#well td.topwall { background-color: #ccc; }
